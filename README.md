@@ -18,7 +18,7 @@ FAKR is a local-first AI runtime that:
 
 Think of it as **session memory for AI pair programming** — instead of starting from scratch every time, FAKR remembers what worked before.
 
-### Installation
+# Installation
 
 ```bash
 # 1. Clone the repo
