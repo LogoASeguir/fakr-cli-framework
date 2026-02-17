@@ -51,14 +51,14 @@ python main.py
 ```
 
 # Basic Workflow
-
-> Hello! Help me build a calculator       # Start a new design
-> Instructions                            # Start the conversation
-> [... work through the design ...]       # Iterate on the problem
-> :freeze calculator_v1                   # Save session to memory
-> :skills                                 # View learned skills
-> :new                                    # Start fresh — FAKR recalls past skills
-
+```
+-Hello! Help me build a calculator       # Start a new design
+-Instructions                            # Start the conversation
+-[... work through the design ...]       # Iterate on the problem
+-:freeze calculator_v1                   # Save session to memory
+-:skills                                 # View learned skills
+-:new                                    # Start fresh — FAKR recalls past skills
+```
 
 ## Architecture
 ```
