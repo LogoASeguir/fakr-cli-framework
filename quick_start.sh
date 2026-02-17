@@ -26,6 +26,6 @@ echo
 echo "----------------------------------------"
 echo "FAKR is running!"
 echo "Now you just need to connect your APIs:"
-echo "- Edit API.env.template -> fill in your API_KEY, API_BASE_URL, WORKSPACE_SLUG"
-echo "- Or install and configure Ollama backend if you want local LLMs"
+echo "Fill in your API_KEY, API_BASE_URL, WORKSPACE_SLUG"
+echo "Or install and configure Ollama backend if you want local LLMs"
 echo "----------------------------------------"
