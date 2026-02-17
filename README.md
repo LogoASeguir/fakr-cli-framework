@@ -95,6 +95,7 @@ It is still under development.
 ```
 
 ## Roadmap
+```
 Multi-model backend (Ollama integration)
                     ↓
 Embryo meta-learning (remember why things worked)
@@ -104,7 +105,7 @@ Automatic skill recall (use learned skills without prompting)
 Structured <think> block parsing for visible reasoning
                     ↓
 MPM-based long-term memory consolidation
-
+```
 
 
 ## Philosophy
