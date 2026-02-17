@@ -18,6 +18,36 @@ Rather than acting as a stateless chatbot, FAKR treats each session as a design 
 ```
 This project focuses on architecture and runtime behavior — not model training.
 
+## Quick Start (Windows/Linux/macOS)
+FAKR is designed for **local-first experimentation**. Once cloned, you can initialize everything quickly.
+
+Clone Repo
+```bash
+git clone <repo-url>
+cd fakr-cli-framework
+
+Install & Launch (Windows)
+Double-click quick_start.bat or run:
+quick_start.bat
+
+
+Install & Launch (Linux/macOS)
+Make shell script executable and run:
+
+chmod +x quick_start.sh
+./quick_start.sh
+
+What it does:
+
+- Installs Python dependencies from requirements.txt
+- Checks if Ollama backend is running (optional)
+- Starts the main FAKR runtime
+
+Prompts you to edit API.env.template with your API keys or configure Ollama
+
+NOTE: At the end, remove ".template" and keep as "API.env" before initializing.
+```
+
 
 ## Core Concepts
 1. Multi-Clock Processing
