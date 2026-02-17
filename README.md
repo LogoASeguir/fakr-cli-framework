@@ -14,7 +14,7 @@ FAKR is a local-first AI runtime that:
 - **Tracks design sessions** with an LLM across multiple conversations
 - **Automatically extracts skills** (code patterns) and **reasoning patterns** (thinking styles)
 - **Builds a growing memory layer** that improves over time
-- **Runs entirely locally** with AnythingLLM
+- **Runs entirely locally** with AnythingLLM (multi-agent in the future with Ollama integration)
 
 Think of it as **session memory for AI pair programming** — instead of starting from scratch every time, FAKR remembers what worked before.
 
