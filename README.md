@@ -55,15 +55,15 @@ python main.py
 
 ## CLI Commands
 ```
-:freeze [label]	Save current session to memory
-:new	Start a new design session
-:skills	List learned skills
-:skill_show <id>	View skill details
-:patterns	List reasoning patterns
-:pattern_show <id>	View pattern template
-:mpm [n]	View last n memory moments
-:embryo	Check self-tuning state
-:help	Full command list
+:freeze [label]	                         # Save current session to memory
+:new	                                 # Start a new design session
+:skills	                                 # List learned skills
+:skill_show <id>	                     # View skill details
+:patterns	                             # List reasoning patterns
+:pattern_show <id>	                     # View pattern template
+:mpm [n]	                             # View last n memory moments
+:embryo	                                 # Check self-tuning state
+:help	                                 # Full command list
 ```
 
 ## Architecture
