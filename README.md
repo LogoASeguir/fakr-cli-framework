@@ -60,16 +60,8 @@ python main.py
 -:new                                    # Start fresh — FAKR recalls past skills
 ```
 
-## Architecture
-```
-Runtime (interaction loop + clocks)
-    ↓
-ModelClient (AnythingLLM wrapper)
-    ↓
-Memory (Skills / Patterns / MPM / Contracts)
-    ↓
-EmbryoCore (self-modulation)
-```
+
+
 
 ## CLI Commands
 ```
@@ -84,46 +76,6 @@ EmbryoCore (self-modulation)
 :help	Full command list
 ```
 
-## Core Concepts
-1. Multi-Clock Processing
-
-FAKR operates with three independent temporal tiers:
-```
-FAST – interactive user loop
-MEDIUM – background consolidation trigger
-SLOW – deeper offline processing
-```
-This separation allows immediate interaction and reflective restructuring to coexist without interfering with each other.
-
-2. Structured Memory (MPM + Stores)
-Each interaction can generate:
-```
-MemoryMoment perspective stacks (MPM)
-Skill cards (executable knowledge units)
-Reasoning patterns (abstracted templates)
-Soft workflow contracts
-```
-Memory is append-only and stored explicitly — not implicitly embedded inside the model.
-
-3. Offline Consolidation
-Sessions can be “frozen” into structured JSON artifacts:
-```
-{
-  "skills": [...],
-  "patterns": [...]
-}
-```
-The runtime enforces strict JSON output and applies multiple parsing recovery layers to ensure robustness.
-
-4. Self-Modulation Layer
-The system tracks:
-```
-Online / offline resonance
-Style parameters (verbosity, directness, reflection allowance)
-A lightweight “Embryo” state machine adjusting internal weights
-```
-These signals influence future prompts but do not modify the underlying model.
-
 ## Architecture
 FAKR is organized into five layers:
 ```
@@ -132,6 +84,14 @@ ModelClient (LLM routing layer)
 Memory System (MPM, SkillStore, PatternStore, ContractStore)
 Temporal Control (ClockState)
 Self-Modulation Core (EmbryoCore)
+---
+Runtime (interaction loop + clocks)
+    ↓
+ModelClient (AnythingLLM wrapper)
+    ↓
+Memory (Skills / Patterns / MPM / Contracts)
+    ↓
+EmbryoCore (self-modulation)
 ```
 The system is modular and designed for experimentation rather than production deployment.
 
@@ -143,17 +103,22 @@ It is a research-oriented runtime exploring structured AI interaction patterns.
 It is still under development.
 ```
 
+## Roadmap
+Multi-model backend (Ollama integration)
+                    ↓
+Embryo meta-learning (remember why things worked)
+                    ↓
+Automatic skill recall (use learned skills without prompting)
+                    ↓
+Structured <think> block parsing for visible reasoning
+                    ↓
+MPM-based long-term memory consolidation
+
+
+
 ## Philosophy
 This project was built with the assistance of AI tools as development accelerators.
 The goal was not model supremacy, but architectural exploration — understanding how structured runtime layers can augment LLM interaction in a transparent, controllable way.
-
-FAKR is a sandbox for experimentation in:
-```
-Memory layering
-Structured consolidation
-Runtime feedback systems
-Local-first AI workflows
-```
 
 ## Author
 Built by [Renato Pedrosa]
