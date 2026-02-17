@@ -36,35 +36,40 @@ cd fakr-cli-framework
 ```bash
 pip install -r requirements.txt
 ```
-# 3. Install & Launch (Windows)
-Double-click quick_start.bat or run
+# 3. Configuration
+Open **runtime/model_client.py**
+**Edit** lines 11-13 with your AnythingLLM settings
+```
+API_BASE_URL = "http://localhost:3001/api/v1"
+API_KEY = "your-api-key-here"
+WORKSPACE_SLUG = "your-workspace-name"
+```
+
+**Run**
 ```bash
-quick_start.bat
+python main.py
 ```
-# 4. Install & Launch (Linux/macOS)
-Make shell script executable and run
-```bash
-chmod +x quick_start.sh
-./quick_start.sh
-```
-What it does:
-- Installs Python dependencies from requirements.txt
-- Checks if Ollama backend is running (optional)
-- Starts the main FAKR runtime
 
-Prompts you to edit model_client.py with your API keys or configure Ollama
+# Basic Workflow
+
+> Hello! Help me build a calculator       # Start a new design
+> Instructions                            # Start the conversation
+> [... work through the design ...]       # Iterate on the problem
+> :freeze calculator_v1                   # Save session to memory
+> :skills                                 # View learned skills
+> :new                                    # Start fresh — FAKR recalls past skills
 
 
-## Overview
-FAKR is an experimental local-first AI runtime designed to explore:
+## Architecture
 ```
-Multi-scale temporal processing (fast / medium / slow reasoning loops)
-Structured memory formation from live interaction
-Offline consolidation into reusable skills and reasoning patterns
-Lightweight self-modulation via feedback signals
-Rather than acting as a stateless chatbot, FAKR treats each session as a design process that can later be frozen into structured memory artifacts.
+Runtime (interaction loop + clocks)
+    ↓
+ModelClient (AnythingLLM wrapper)
+    ↓
+Memory (Skills / Patterns / MPM / Contracts)
+    ↓
+EmbryoCore (self-modulation)
 ```
-This project focuses on architecture and runtime behavior — not model training.
 
 ## CLI Commands
 ```
