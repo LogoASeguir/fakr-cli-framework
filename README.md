@@ -18,27 +18,19 @@ FAKR is a local-first AI runtime that:
 
 Think of it as **session memory for AI pair programming** — instead of starting from scratch every time, FAKR remembers what worked before.
 
-## Quick Start (Windows/Linux/macOS)
-FAKR is designed for **local-first experimentation**. Once cloned, you can initialize everything quickly.
+### Installation
 
-### Prerequisites
-```
-# Python 3.9+
-python --version
-```
-
-# 1. Clone Repo
 ```bash
+# 1. Clone the repo
 git clone https://github.com/LogoASeguir/fakr-cli-framework
 cd fakr-cli-framework
-```
+
 # 2. Install dependencies
-```bash
 pip install -r requirements.txt
 ```
+
 # 3. Configuration
-Open **runtime/model_client.py**
-**Edit** lines 11-13 with your AnythingLLM settings
+Open **runtime/model_client.py** and edit lines 11-13 with your AnythingLLM settings:
 ```
 API_BASE_URL = "http://localhost:3001/api/v1"
 API_KEY = "your-api-key-here"
@@ -59,8 +51,6 @@ python main.py
 -:skills                                 # View learned skills
 -:new                                    # Start fresh — FAKR recalls past skills
 ```
-
-
 
 
 ## CLI Commands
