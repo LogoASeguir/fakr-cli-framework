@@ -31,13 +31,14 @@ def main() -> None:
             if cmd == "help":
                 print(
                     "Commands:\n"
-                    "  :help                     - show this help\n"
+                    "  :help                      - show this help\n"
                     "  :q / :quit / :exit         - exit\n\n"
                     "Design flow:\n"
-                    "  :new                      - clear current design; next input starts a new one\n"
+                    "  :new                       - clear current design; next input starts a new one\n"
                     "  :load <design_id>          - load a design by id\n"
                     "  :freeze [label]            - freeze current design into skills + patterns\n"
                     "                              optional label, e.g. :freeze tone_player_v1\n\n"
+                    "  :clear                     - clear chat history\n"
                     "Memory:\n"
                     "  :skills                    - list known skill ids\n"
                     "  :skill_show <skill_id>     - show stored core_code for a skill\n"
@@ -115,6 +116,15 @@ def main() -> None:
                 continue
 
             # ---------------- Design flow ----------------
+            if cmd == "clear":
+                try:
+                    from runtime.model_client import AnythingLLMBackend
+                    backend = AnythingLLMBackend()
+                    ok = backend.clear_chat_history()
+                    print("Chat history cleared!" if ok else "Failed to clear (do it manually in UI)")
+                except Exception as e:
+                    print(f"Error: {e}")
+                continue
 
             if cmd == "freeze":
                 label = arg.strip() or None

@@ -297,6 +297,7 @@ class Runtime:
         embryo_self = self.embryo.describe_self()
         contracts_ctx = self.build_contracts_context()
 
+        # BUILD CONTEXT
         context = (
             f"{self.current_design.goal}\n\n"
             f"{style_hint}\n"
@@ -305,6 +306,16 @@ class Runtime:
         if contracts_ctx:
             context += "\n" + contracts_ctx
 
+        # ADD KNOWN SKILLS/PATTERNS (NEW!)
+        skill_ids = self.skills.all_ids()
+        pattern_ids = self.patterns.all_ids()
+
+        if skill_ids:
+            context += f"\n\nKNOWN_SKILLS: {skill_ids}"
+        if pattern_ids:
+            context += f"\n\nKNOWN_PATTERNS: {pattern_ids}"
+
+        # RETRY HINT
         if retry_count >= 2:
             context += (
                 "\n\nRETRY_HINT:\n"
@@ -313,6 +324,7 @@ class Runtime:
                 "then provide a corrected answer."
             )
 
+        # DOCS CONTEXT
         docs_ctx = self.build_docs_context(f"{self.current_design.goal}\n\n{text}")
         if docs_ctx:
             context += "\n\n" + docs_ctx
@@ -382,7 +394,6 @@ class Runtime:
             self.tick_offline(background=True)
 
         return response
-
     # ---------------------- offline jobs -------------------------
 
     def _maybe_enqueue_consolidation(self, text: str, response: str) -> None:

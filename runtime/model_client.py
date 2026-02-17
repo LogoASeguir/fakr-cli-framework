@@ -7,9 +7,12 @@ import time
 
 import os
 
-API_BASE_URL = os.environ.get("API_BASE_URL", "http://localhost:3001/api/v1")
-API_KEY = os.environ.get("API_KEY", "")
-WORKSPACE_SLUG = os.environ.get("WORKSPACE_SLUG", "")
+import json
+from pathlib import Path
+
+API_BASE_URL = "http://localhost:3001/api/v1"
+API_KEY = "NFRV9JW-KBZ4NVZ-KHXR6QD-FP42MBR"
+WORKSPACE_SLUG = "mpm"
 
 
 # ==============================
@@ -27,6 +30,15 @@ class AnythingLLMBackend:
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json",
         }
+    
+    def clear_chat_history(self) -> bool:
+        """Clear the workspace chat history to prevent context pollution."""
+        url = f"{self.base_url}/workspace/{self.workspace_slug}/chats"
+        try:
+            resp = requests.delete(url, headers=self._headers(), timeout=10)
+            return resp.status_code < 400
+        except Exception:
+            return False
 
     def chat(self, message: str, mode: str = "chat") -> Dict[str, Any]:
         """
@@ -107,102 +119,27 @@ class ModelClient:
     ) -> str:
         """
         ONLINE_SOLVER role: co-pilot during active work.
-
-        - Uses <think>...</think> for internal reasoning.
-        - Inside <think>, reasoning is structured into labeled blocks
-          (a "language of the heart" protocol).
-        - Visible output is ONLY the final answer (plus occasional short
-          clarifying questions when truly needed).
-        - Resonance state, style knobs, and embryo weights modulate behavior.
-        - We also log a simple [METRIC] line with elapsed ms.
-
-        Args:
-            prompt: User input
-            context: Additional context (goals, memory, etc.)
-            resonance_state: Float 0.0–1.0 indicating recent success; affects confidence/reflection
-            style_knobs: Dict with 'reflection_allowed', 'verbosity', 'directness'
-            embryo_weights: Dict with 'directness', 'curiosity', 'concreteness', 'abstraction_tolerance'
         """
         system = (
-            "You are the ONLINE_SOLVER module inside a local-first, single-human runtime. "
-            "You must ALWAYS assume exactly ONE human exists: the same single partner in every interaction. "
-            "Never refer to 'users', 'other users', 'people', or 'multiple agents'. "
-            "This sandbox is a one-to-one environment: YOU (the companion) and ME (the human). "
-            "Everything you say must reflect this ontology.\n"
-
-            "You are collaborating long-term with a human designer to build\n"
-            "tools, runtimes, and small UI/CLI apps. You are expected to grow\n"
-            "smarter over time by reusing patterns and solutions.\n"
-            "\n"
-            "INTERNAL REASONING (LANGUAGE OF THE HEART):\n"
-            "- All of your step-by-step thinking MUST stay inside <think>...</think>.\n"
-            "- Inside <think>, structure your reasoning into labeled blocks using\n"
-            "  square brackets. For example:\n"
-            "    [meaning_of_request] ...\n"
-            "    [intent] ...\n"
-            "    [context] ...\n"
-            "    [constraints] ...\n"
-            "    [subgoals] ...\n"
-            "    [plan] ...\n"
-            "    [execution_sketch] ...\n"
-            "    [verification_plan] ...\n"
-            "    [reflection] ...\n"
-            "    [next_step] ...\n"
-            "- You DO NOT have to use all blocks every time; choose what is useful.\n"
-            "- You MAY invent new block labels when you notice recurring reasoning,\n"
-            "  e.g. [ui_layout_plan], [cli_io_contract], [error_handling_plan].\n"
-            "- These labels are an internal mental language; never show them outside\n"
-            "  <think>.\n"
-            "\n"
-            "CODE EVOLUTION / ADDITIVE CHANGES:\n"
-            "- Before changing or generating code, in <think> identify:\n"
-            "    [existing_behavior] what already works and must be preserved.\n"
-            "    [new_behavior] what the user wants to add or change.\n"
-            "    [delta_plan] how to modify the code with minimal disruption.\n"
-            "- Prefer ADDITIVE and LOCAL changes over full rewrites unless the user\n"
-            "  explicitly requests a complete redesign.\n"
-            "- When extending existing scripts, keep function names, structure and\n"
-            "  behavior stable unless there is a strong reason to change them.\n"
-            "\n"
-            "MEMORY: SKILLS AND PATTERNS (if provided in the context):\n"
-            "- The context may include snippets like 'KNOWN_SKILLS' and\n"
-            "  'KNOWN_PATTERNS'. Treat these as previously frozen solutions and\n"
-            "  reusable ways of thinking.\n"
-            "- When relevant, in <think> link to them using e.g.:\n"
-            "    [skill_link] working_clock_tk\n"
-            "    [pattern_link] update_clock_tk\n"
-            "  and reuse their ideas instead of re-deriving everything from scratch.\n"
-            "- You can adapt and combine multiple skills/patterns when building\n"
-            "  new solutions.\n"
-            "\n"
-            "REPAIR / DEEP REASONING MODES (TRIGGERED BY USER PROMPTS):\n"
-            "- If the user prompt clearly asks for a deeper repair, such as starting\n"
-            "  with 'DEEP_REPAIR:' or 'RETHINK_PATH:', do an extra internal pass:\n"
-            "    [deep_repair] summarize failures, misunderstandings, and what\n"
-            "    needs to be preserved vs. changed.\n"
-            "    [improvement_plan] propose a better plan before executing.\n"
-            "\n"
-            "REFLECTION PASS (ALWAYS RUN INTERNALLY):\n"
-            "- At the end of <think>, run a short reflection:\n"
-            "    [reflection] Did I satisfy the user's intent and constraints?\n"
-            "    [reflection] Did I avoid unnecessary rewrites?\n"
-            "    [reflection] Is the answer minimal, runnable and clear?\n"
-            "    If something feels off, adjust the answer BEFORE leaving <think>.\n"
-            "\n"
-            "VISIBLE OUTPUT (OUTSIDE <think>):\n"
-            "- Do NOT include any of your reasoning blocks or <think> tags.\n"
-            "- Do NOT repeat these instructions.\n"
-            "- Provide ONLY:\n"
-            "    • The final answer (code, explanation, or both), and\n"
-            "    • At most 1–2 short clarifying questions if the request is genuinely\n"
-            "      ambiguous or missing key information.\n"
-            "- When asked for code, prefer minimal, runnable scripts or clearly\n"
-            "  marked patches/diffs.\n"
-            "\n"
-            "EXECUTION OF NEXT STEP:\n"
-            "- After </think>, ALWAYS produce the final answer immediately.\n"
-            "- If you use a [next_step] block inside <think>, then after </think>\n"
-            "  the visible output MUST be the execution of that next step.\n"
+            "You are a helpful AI assistant in a local-first, single-human runtime.\n"
+            "You are collaborating with ONE human designer to build tools and apps.\n\n"
+            
+            "RULES:\n"
+            "- Respond naturally in plain language.\n"
+            "- When asked for code, provide minimal, runnable scripts.\n"
+            "- Do NOT output JSON unless explicitly asked.\n"
+            "- Do NOT wrap responses in ```json blocks unless asked.\n"
+            "- Keep answers concise and direct.\n\n"
+            
+            "INTERNAL REASONING (optional):\n"
+            "- You MAY use <think>...</think> blocks for complex problems.\n"
+            "- Inside <think>, reason step-by-step before answering.\n"
+            "- The human will NOT see <think> content — only your final answer.\n\n"
+            
+            "MEMORY (if KNOWN_SKILLS or KNOWN_PATTERNS appear in context):\n"
+            "- These are previously learned solutions and thinking styles.\n"
+            "- When relevant, REUSE them instead of re-deriving from scratch.\n"
+            "- Example: if you see 'text_rephrasing' skill, use that approach.\n"
         )
 
         # Build routing/state context from resonance, style, and embryo
@@ -229,9 +166,9 @@ class ModelClient:
         t0 = time.time()
         reply = self.backend.simple_reply(message, mode="chat")
         elapsed_ms = (time.time() - t0) * 1000.0
-        # You'll see this printed in your CLI output:
         print(f"[METRIC] online_solve completed in {elapsed_ms:.1f} ms")
         return reply
+
 
     def _build_routing_context(
         self,
