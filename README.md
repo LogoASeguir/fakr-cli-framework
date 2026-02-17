@@ -69,12 +69,13 @@ python main.py
 ## Architecture
 FAKR is organized into five layers:
 ```
+---------------------------------------------------------------
 Runtime (interaction loop + clocks)
 ModelClient (LLM routing layer)
 Memory System (MPM, SkillStore, PatternStore, ContractStore)
 Temporal Control (ClockState)
 Self-Modulation Core (EmbryoCore)
----
+---------------------------------------------------------------
 Runtime (interaction loop + clocks)
     ↓
 ModelClient (AnythingLLM wrapper)
