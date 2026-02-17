@@ -114,8 +114,8 @@ The goal was not model supremacy, but architectural exploration — understandin
 
 ## Author
 Built by [Renato Pedrosa]
+
 Part of a growing ecosystem of personal tools.
-📫 renatopedrosa.info@gmail.com | LinkedIn | GitHub
 
 
 
