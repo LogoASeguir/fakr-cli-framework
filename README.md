@@ -1,11 +1,59 @@
 # FAKR: Fractal Agent Kernel Runtime
-## Experimental Multi-Clock AI Runtime with Structured Memory Consolidation
+**A self-learning AI runtime that turns conversations into reusable knowledge.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![Status: Experimental](https://img.shields.io/badge/status-experimental-orange.svg)]()
 
 ---
+
+## What It Does
+
+FAKR is a local-first AI runtime that:
+
+- **Tracks design sessions** with an LLM across multiple conversations
+- **Automatically extracts skills** (code patterns) and **reasoning patterns** (thinking styles)
+- **Builds a growing memory layer** that improves over time
+- **Runs entirely locally** with AnythingLLM
+
+Think of it as **session memory for AI pair programming** — instead of starting from scratch every time, FAKR remembers what worked before.
+
+## Quick Start (Windows/Linux/macOS)
+FAKR is designed for **local-first experimentation**. Once cloned, you can initialize everything quickly.
+
+### Prerequisites
+```
+# Python 3.9+
+python --version
+```
+
+# 1. Clone Repo
+```bash
+git clone https://github.com/LogoASeguir/fakr-cli-framework
+cd fakr-cli-framework
+```
+# 2. Install dependencies
+```bash
+pip install -r requirements.txt
+```
+# 3. Install & Launch (Windows)
+Double-click quick_start.bat or run
+```bash
+quick_start.bat
+```
+# 4. Install & Launch (Linux/macOS)
+Make shell script executable and run
+```bash
+chmod +x quick_start.sh
+./quick_start.sh
+```
+What it does:
+- Installs Python dependencies from requirements.txt
+- Checks if Ollama backend is running (optional)
+- Starts the main FAKR runtime
+
+Prompts you to edit model_client.py with your API keys or configure Ollama
+
 
 ## Overview
 FAKR is an experimental local-first AI runtime designed to explore:
@@ -18,36 +66,18 @@ Rather than acting as a stateless chatbot, FAKR treats each session as a design 
 ```
 This project focuses on architecture and runtime behavior — not model training.
 
-## Quick Start (Windows/Linux/macOS)
-FAKR is designed for **local-first experimentation**. Once cloned, you can initialize everything quickly.
-
-Clone Repo
-```bash
-git clone <repo-url>
-cd fakr-cli-framework
-
-Install & Launch (Windows)
-Double-click quick_start.bat or run:
-quick_start.bat
-
-
-Install & Launch (Linux/macOS)
-Make shell script executable and run:
-
-chmod +x quick_start.sh
-./quick_start.sh
-
-What it does:
-
-- Installs Python dependencies from requirements.txt
-- Checks if Ollama backend is running (optional)
-- Starts the main FAKR runtime
-
-Prompts you to edit API.env.template with your API keys or configure Ollama
-
-NOTE: At the end, remove ".template" and keep as "API.env" before initializing.
+## CLI Commands
 ```
-
+:freeze [label]	Save current session to memory
+:new	Start a new design session
+:skills	List learned skills
+:skill_show <id>	View skill details
+:patterns	List reasoning patterns
+:pattern_show <id>	View pattern template
+:mpm [n]	View last n memory moments
+:embryo	Check self-tuning state
+:help	Full command list
+```
 
 ## Core Concepts
 1. Multi-Clock Processing
@@ -100,38 +130,18 @@ Self-Modulation Core (EmbryoCore)
 ```
 The system is modular and designed for experimentation rather than production deployment.
 
-## Quick Start
-
-### Prerequisites
-```
-# Python 3.9+
-python --version
-```
-
-# Ollama (for local LLM inference)
-```
-curl -fsSL https://ollama.com/install.sh | sh
-```
-
-# Pull required models
-```
-ollama pull phi3:mini      # 3B - fast responses
-ollama pull mistral:7b-q5  # ~5B - reasoning tasks
-ollama pull llama3:8b      # 8B - deep learning
-```
-Run the runtime entry point and begin interacting.
-
 ## Project Status
 FAKR is experimental and under active architectural refinement.
 ```
 It is not a production system.
 It is a research-oriented runtime exploring structured AI interaction patterns.
+It is still under development.
 ```
 
 ## Philosophy
 This project was built with the assistance of AI tools as development accelerators.
-
 The goal was not model supremacy, but architectural exploration — understanding how structured runtime layers can augment LLM interaction in a transparent, controllable way.
+
 FAKR is a sandbox for experimentation in:
 ```
 Memory layering
