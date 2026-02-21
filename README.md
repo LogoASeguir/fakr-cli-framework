@@ -14,9 +14,9 @@ FAKR is a local-first AI runtime that:
 - **Tracks design sessions** with an LLM across multiple conversations
 - **Automatically extracts skills** (code patterns) and **reasoning patterns** (thinking styles)
 - **Builds a growing memory layer** that improves over time
-- **Runs entirely locally** with AnythingLLM (multi-agent in the future with Ollama integration)
+- **Runs entirely locally** with AnythingLLM (Ollama Mutli-agent WIP for faster training)
 
-Think of it as **session memory for AI pair programming** — instead of starting from scratch every time, FAKR remembers what worked before.
+Think of it as **session memory for AI pair programming** — instead of starting from scratch every time, FAKR remembers what worked before and starts from there.
 
 # Installation
 
@@ -87,7 +87,7 @@ EmbryoCore (self-modulation)
 The system is modular and designed for experimentation rather than production deployment.
 
 ## Project Status
-FAKR is experimental and under active architectural refinement.
+FAKR is experimental and under active refinement.
 ```
 It is not a production system.
 It is a research-oriented runtime exploring structured AI interaction patterns.
@@ -109,8 +109,9 @@ MPM-based long-term memory consolidation
 
 
 ## Philosophy
-This project was built with the assistance of AI tools as development accelerators.
+This project was built with the assistance of AI tools as development accelerator and to better understand processes and reasoning. 
 The goal was not model supremacy, but architectural exploration — understanding how structured runtime layers can augment LLM interaction in a transparent, controllable way.
+From which I could also understand script separation and project architecture introduction.
 
 ## Author
 Built by [Renato Pedrosa]
