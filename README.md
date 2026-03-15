@@ -116,7 +116,7 @@ From which I could also understand script separation and project architecture in
 ## Author
 Built by [Renato Pedrosa]
 
-Part of a growing ecosystem of personal tools.
+Part of a growing ecosystem of tools and experience.
 
 
 
